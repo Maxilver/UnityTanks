@@ -5,7 +5,11 @@ public class Player : Tank {
 
 	public Transform barrel;
 	public Transform bullet;
-	public Transform[] spawnPoints;
+	private GameObject[] spawners;
+
+	void Start() {
+		spawners = GameObject.FindGameObjectsWithTag("Respawn");
+	}
 
 	void FixedUpdate() {
 		rigidbody2D.AddForce(moveDirection * speed);
@@ -39,8 +43,10 @@ public class Player : Tank {
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.transform.CompareTag("enemy")) { 
 			Bang ();
-			transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
+			spawners[0].transform.GetComponent<Spawners>().playerIsAlive = false;
+			Destroy(gameObject);
 		}
 	}
+
 
 }

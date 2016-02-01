@@ -38,7 +38,6 @@ public class Enemy : Tank {
 		if (collider.transform.CompareTag("bullet")) { 
 			Bang ();
 			Destroy(gameObject);
-			Destroy(collider.gameObject);
 		}
 	}
 
