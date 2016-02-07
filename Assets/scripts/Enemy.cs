@@ -10,32 +10,25 @@ public class Enemy : Tank {
 	}
 	
 	void FixedUpdate() {
-	    rigidbody2D.AddForce(moveDirection * speed);
+		rigidbody2D.AddForce(moveDirection * speed);
 	}
 
 	void ChangeDirection() {
-		switch (Random.Range (1, 5)) {
-			case 1:
-   				goUp();
-				break;
-			case 2:
-				goDown();
-				break;
-			case 3:
-				goLeft();
-				break;
-			case 4:
-				goRight();
-				break;
+		float x;
+		float y;
+		do {
+			x = Random.Range (-1, 2);
+			y = Random.Range (-1, 2);
 		}
-
+		while(x == 0 && y == 0);
+		goXY(x, y);	
 		transform.rotation = Quaternion.Euler(rotation);
 		Invoke("ChangeDirection", Random.Range(1f, 3f));
 
 	}
 
 	void OnTriggerEnter2D(Collider2D collider) {
-		if (collider.transform.CompareTag("bullet")) { 
+		if (collider.transform.CompareTag("bullet")) {
 			Bang ();
 			Destroy(gameObject);
 		}

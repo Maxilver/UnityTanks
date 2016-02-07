@@ -30,7 +30,6 @@ public class Player : Tank {
 		//cannon.localRotation = cannonRotation;
 		//cannon.LookAt (transform.position - cursorPosition, Vector3.forward);
 
-
 	}
 
 	void Update () {	
@@ -38,22 +37,23 @@ public class Player : Tank {
 			Instantiate(bullet, barrel.position, cannon.rotation);
 		}
 
-		if(Input.GetKey(KeyCode.W) || Input.GetKey("up")) {
-			goUp();
+		float MovementY = 0;
+		if (Input.GetKey (KeyCode.W) || Input.GetKey ("up")) {
+			MovementY++;
 		}
-		else if(Input.GetKey(KeyCode.S) || Input.GetKey("down")) {
-			goDown();
-		}
-		else if(Input.GetKey(KeyCode.A) || Input.GetKey("left")) {
-			goLeft();
-		}
-		else if(Input.GetKey(KeyCode.D) || Input.GetKey("right")) {
-			goRight();
-		}
-		else {
-			moveDirection = new Vector2(0, 0);
+		if (Input.GetKey (KeyCode.S) || Input.GetKey ("down")) {
+			MovementY--;
 		}
 
+		float MovementX = 0;
+		if (Input.GetKey(KeyCode.A) || Input.GetKey("left")) {
+			MovementX--;
+		}
+		if (Input.GetKey(KeyCode.D) || Input.GetKey("right")) {
+			MovementX++;
+		}
+
+		goXY (MovementX, MovementY);
 		transform.rotation = Quaternion.Euler(rotation);
 
 	}

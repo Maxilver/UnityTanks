@@ -12,21 +12,12 @@ public class Tank : MonoBehaviour {
 		Instantiate (boom, transform.position, transform.rotation);
 	}
 
-	public void goUp() {
-		moveDirection = new Vector2(0, 1);
-		rotation = new Vector3(0, 0, 0);
-	}
-	public void goDown() {
-		moveDirection = new Vector2(0, -1);
-		rotation = new Vector3(0, 0, 180);
-	}
-	public void goLeft() {
-		moveDirection = new Vector2(-1, 0);
-		rotation = new Vector3(0, 0, 90);
-	}
-	public void goRight() {
-		moveDirection = new Vector2(1, 0);
-		rotation = new Vector3(0, 0, 270);
+	public void goXY(float x = 0, float y = 0) {
+		moveDirection = new Vector2 (x, y);
+		if (x != 0 || y != 0) {
+			float eulerZ = Mathf.Rad2Deg * Mathf.Atan2(-x, y);
+			rotation = new Vector3(0, 0, eulerZ);
+		}
 	}
 	
 }
