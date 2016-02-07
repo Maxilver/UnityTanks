@@ -6,18 +6,36 @@ public class Player : Tank {
 	public Transform barrel;
 	public Transform bullet;
 	private GameObject[] spawners;
+	private Transform cannon;
 
 	void Start() {
 		spawners = GameObject.FindGameObjectsWithTag("Respawn");
+	
+		foreach (Transform child in transform) {
+			if (child.transform.CompareTag("Cannon")) {
+				cannon = child;
+			}
+		}
 	}
 
 	void FixedUpdate() {
 		rigidbody2D.AddForce(moveDirection * speed);
+
+		var cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Quaternion cannonRotation = Quaternion.LookRotation(transform.position - cursorPosition, Vector3.forward);
+		cannon.rotation = cannonRotation;
+		cannon.eulerAngles = new Vector3 (0, 0, cannon.eulerAngles.z);
+
+		//cannon.RotateAround (Vector3.zero, Vector3.forward, 20 * Time.deltaTime);
+		//cannon.localRotation = cannonRotation;
+		//cannon.LookAt (transform.position - cursorPosition, Vector3.forward);
+
+
 	}
 
 	void Update () {	
 		if(Input.GetMouseButtonDown(0))	{
-			Instantiate(bullet, barrel.position, transform.rotation);
+			Instantiate(bullet, barrel.position, cannon.rotation);
 		}
 
 		if(Input.GetKey(KeyCode.W) || Input.GetKey("up")) {
