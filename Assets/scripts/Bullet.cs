@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider) {
-		if (!collider.transform.CompareTag ("player")) {
+		if (!collider.transform.CompareTag ("Player")) {
 			Destroy (gameObject);
 		}
 	}
