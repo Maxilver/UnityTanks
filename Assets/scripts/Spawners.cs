@@ -3,13 +3,19 @@ using System.Collections;
 
 public class Spawners : MonoBehaviour {
 
-	public Transform player;
+	public GameObject player;
+	public GameObject spawner;
 	public bool playerIsAlive = true;
-	private ArrayList childSpawners = new ArrayList();  
+	public ArrayList childSpawners = new ArrayList();  
 
 	void Start () {
-		foreach (Transform child in transform) {
-			childSpawners.Add(child);
+		float spawnAreaSize = (Game.areaSize / 2) - 1;
+		for (var i = 0; i < 4; i++) {
+			int xRevertered = (i < 2) ? 1 : -1;
+			int yRevertered = (i % 2 == 0) ? 1 : -1;
+			GameObject childSpawner = Instantiate(spawner, new Vector2(spawnAreaSize * xRevertered, spawnAreaSize * yRevertered), transform.rotation) as GameObject;
+			childSpawner.transform.parent = transform;
+			childSpawners.Add(childSpawner);
 		}
 	}
 
@@ -21,7 +27,7 @@ public class Spawners : MonoBehaviour {
 	}
 
 	void ResurectPlayer() {
-		Transform randomSpawner = childSpawners[Random.Range(0, childSpawners.Count)] as Transform;
-		Instantiate(player, randomSpawner.position, transform.rotation);
+		GameObject randomSpawner = childSpawners[Random.Range(0, childSpawners.Count)] as GameObject;
+		Instantiate(player, randomSpawner.transform.position, transform.rotation);
 	}
 }
