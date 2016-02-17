@@ -1,18 +1,50 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Game : MonoBehaviour {
 
-	public bool gameIsOn = false;
-	public static float areaSize = 10;
+	public static float areaSize;
+
+	//public bool gameIsOn = false;
+	public float minSize;
+	public GameObject image;
+	public GameObject player;
 	public GameObject wall;
 	public GameObject spawners;
 	public GameObject enemy;
 
+	private bool validated = true;
+
+	public void GameStart() {
+		if (validated) {
+			BuildWalls();
+			Instantiate(spawners, new Vector2(0, 0), transform.rotation);
+			Instantiate(enemy, new Vector2(0, 0), transform.rotation);
+			GameObject playerObject = Instantiate(player, new Vector2(0, -1), transform.rotation) as GameObject;
+			CameraController.target = playerObject.transform;
+			image.SetActive(false);
+		}
+	}
+
+	public void areaSizeValidate() {
+		string text = image.transform.Find("Size").GetComponent<InputField>().text;
+		validated = false;
+		float size;
+		if (float.TryParse(text, out size)) {
+			print (size);
+			print (validated);
+
+			if (size >= minSize) {
+				validated = true;
+				areaSize = size;
+			}
+		}
+	}
+
 	void Awake() {
-		BuildWalls();
-		Instantiate(spawners, new Vector2(0, 0), transform.rotation);
-		Instantiate(enemy, new Vector2(0, 0), transform.rotation);
+		areaSize = minSize;
+		image.transform.Find ("Size").GetComponent<InputField>().text = minSize.ToString();
 	}
 
 	void BuildWalls() {

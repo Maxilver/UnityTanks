@@ -4,12 +4,9 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	public float dampTime = 0.15f;
-	private Vector3 velocity = Vector3.zero;
-	private Transform target;
+	public static Transform target;
 
-	void Start() {
-		target = GameObject.FindWithTag("Player").transform;
-	}
+	private Vector3 velocity = Vector3.zero;
 
 	void Update () 
 	{

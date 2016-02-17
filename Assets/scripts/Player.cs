@@ -27,10 +27,6 @@ public class Player : Tank {
 		cannon.rotation = cannonRotation;
 		cannon.eulerAngles = new Vector3 (0, 0, cannon.eulerAngles.z);
 
-		//cannon.RotateAround (Vector3.zero, Vector3.forward, 20 * Time.deltaTime);
-		//cannon.localRotation = cannonRotation;
-		//cannon.LookAt (transform.position - cursorPosition, Vector3.forward);
-
 	}
 
 	void Update () {	
